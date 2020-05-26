@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dataimport.mapper.cluster.ClusterMeetMapper">
+
+   <!-- <select id="selectUserInfoCluster" resultType="com.example.dataimport.entity.HhUser">
+        select user_id,user_name from hh_user where user_phone = #{userPhone}
+    </select>-->
+
+    <insert id="saveUserListFromExcel">
+        insert into xiaoe_user
+        (user_id,name,phone,sex,age,create_time) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId},#{item.name},#{item.phone},#{item.sex},#{item.age},#{item.createTime})
+        </foreach>
+    </insert>
+</mapper>

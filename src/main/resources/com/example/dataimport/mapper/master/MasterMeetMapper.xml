@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dataimport.mapper.master.MasterMeetMapper">
+
+    <resultMap id="selectMeetInfoByUserPhone" type="com.example.dataimport.entity.KsMeet">
+        <result property="meetId" column="meet_id" jdbcType="VARCHAR"/>
+        <result property="courseId" column="course_id" jdbcType="VARCHAR"/>
+        <result property="teacherId" column="teacher_id" jdbcType="VARCHAR"/>
+        <result property="meetPic" column="meet_pic" jdbcType="VARCHAR"/>
+        <result property="beginTime" column="begin_time" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="VARCHAR"/>
+        <result property="meetName" column="meet_name" jdbcType="VARCHAR"/>
+        <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="teacherName" column="teacher_name" jdbcType="VARCHAR"/>
+        <result property="h5Pic" column="h5_pic" jdbcType="VARCHAR"/>
+        <association property="hhUser" javaType="com.example.dataimport.entity.HhUser">
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="userPhone" column="user_phone" jdbcType="VARCHAR"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="headImg" column="head_img" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+   <!-- <select id="selectUserInfo" resultType="com.example.dataimport.entity.HhUser">
+        select user_id,user_name from hh_user where user_phone = #{userPhone}
+    </select>-->
+
+
+    <select id="selectMeetInfoByUserPhone" resultMap="selectMeetInfoByUserPhone">
+         SELECT
+          hu.user_id ,
+          hu.user_phone,
+          hu.user_name,
+          hu.head_img,
+          hu.sex,
+          km.meet_name,
+          km.begin_time,
+          km.end_time,
+          km.address,
+          km.teacher_name,
+          km.h5_pic,
+          km.meet_pic,
+          km.meet_id,
+          km.course_id,
+          km.teacher_id,
+          km.create_time
+      FROM
+          ks_meet_user kmu
+          INNER JOIN hh_user hu ON kmu.phone = hu.user_phone
+          INNER JOIN ks_meet km ON kmu.meet_id = km.meet_id
+      WHERE
+          kmu.phone = #{userPhone}
+          AND kmu.STATUS = '0'
+          AND km.STATUS = '0'
+      ORDER BY
+          kmu.create_time DESC
+    </select>
+    <select id="selectCourseRecordsByUserPhone" resultType="java.util.Map">
+        SELECT
+            hu.user_phone,
+            hu.user_name,
+            hc.column_title title,
+            hc.column_img img,
+            hcr.create_time,
+            hcr.course_bean,
+            hcr.course_price,
+            hcr.out_trade_no,
+            'column' AS record_type
+        FROM
+            hh_course_record hcr
+            INNER JOIN hh_column hc ON hcr.column_id = hc.column_id
+            INNER JOIN hh_user hu ON hcr.user_id = hu.user_id
+        WHERE
+            hcr.STATUS = '0'
+            AND hc.STATUS = '0'
+            AND hu.user_phone = #{columnPhone}
+            AND LENGTH( hcr.column_id )> 0 UNION ALL
+        SELECT
+            hu.user_phone,
+            hu.user_name,
+            hc.course_title title,
+            hc.course_img img,
+            hcr.create_time,
+            hcr.course_bean,
+            hcr.course_price,
+            hcr.out_trade_no,
+            'course' AS record_type
+        FROM
+            hh_course_record hcr
+            INNER JOIN hh_course hc ON hcr.course_id = hc.course_id
+            INNER JOIN hh_user hu ON hcr.user_id = hu.user_id
+        WHERE
+            hcr.STATUS = '0'
+            AND hc.STATUS = '0'
+            AND hu.user_phone = #{coursePhone}
+            AND LENGTH( hcr.course_id )> 0
+        ORDER BY
+            create_time DESC
+    </select>
+</mapper>
