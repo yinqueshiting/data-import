@@ -2,6 +2,7 @@ package com.example.dataimport.service.impl;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.dataimport.entity.UploadInfo;
 import com.example.dataimport.entity.VideoType;
 import com.example.dataimport.mapper.master.VideoTypeMapper;
 import com.example.dataimport.service.VideoTypeService;
@@ -45,5 +46,12 @@ public class VideoTypeServiceImpl implements VideoTypeService {
     public Result selectVideoTypes() {
         List<VideoType> typeList = videoTypeMapper.selectVideoTypes();
         return Result.success(typeList);
+    }
+
+    @Override
+    @DS("cluster-rls")
+    public Result selectUploadLists() {
+        List<UploadInfo> infoLists =  videoTypeMapper.selectUploadLists();
+        return Result.success(infoLists);
     }
 }

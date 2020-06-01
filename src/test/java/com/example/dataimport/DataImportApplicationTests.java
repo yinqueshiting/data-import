@@ -1,19 +1,20 @@
 package com.example.dataimport;
 
-import com.alibaba.excel.EasyExcel;
 import com.example.dataimport.controller.MeetController;
-import com.example.dataimport.entity.XiaoeUser;
 import com.example.dataimport.service.ClusterService;
 import com.example.dataimport.service.MeetService;
-import com.example.dataimport.util.DataListener;
+import com.example.dataimport.util.UploadUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @SpringBootTest
 public class DataImportApplicationTests {
@@ -26,21 +27,17 @@ public class DataImportApplicationTests {
     @Autowired
     private MeetController meetController;
     @Test
-    public void contextLoads() {
-        XiaoeUser xiaoeUser = new XiaoeUser();
-        xiaoeUser.setUserId("uus84");xiaoeUser.setAge("15");xiaoeUser.setCreateTime("2020-05-20");xiaoeUser.setName("1");xiaoeUser.setPhone("152412");xiaoeUser.setSex("男");
-
-        XiaoeUser xiaoeUser1 = new XiaoeUser();
-        xiaoeUser1.setUserId("85214");xiaoeUser1.setAge("15");xiaoeUser1.setCreateTime("2020-05-20");xiaoeUser1.setName("20");xiaoeUser1.setPhone("152412");xiaoeUser1.setSex("男");
-
-        List<XiaoeUser> list = new ArrayList<>();
-        list.add(xiaoeUser);list.add(xiaoeUser1);
-        //-----------------------------
-        List<XiaoeUser> list1 = new ArrayList<>();
-        list1.add(xiaoeUser);
-        list.removeAll(list1);
-        System.out.println(list);
-
+    public void contextLoads() throws FileNotFoundException, URISyntaxException {
+      /*  File originalFile = new File("C:\\Users\\Administrator\\Desktop\\583a8c66ef2d4c32d74afc3272b8736.jpg");
+        try {
+            InputStream inputStream = new FileInputStream(originalFile);
+            //UploadUtil.uploadFile("120.76.152.182",22,"root","Cy123456666","/usr/tomcat/apache-tomcat-7.0.100/webapps/HappyHui/upload/xiaoe",inputStream,"test.jpg");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }*/
+        URI imageUrl = new URI("http://www.xingfuh.com/HappyHui/upload/xiaoe/e16c9bd2-ee7e-4622-8b4b-bf29d9bc4101.jpg");
+        FileOutputStream outputStream = new FileOutputStream(new File(imageUrl));
+        //outputStream.write();
 
     }
 

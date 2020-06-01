@@ -9,4 +9,6 @@ public interface VideoTypeService {
     Result updateVideoType(VideoType videoType);
 
     Result selectVideoTypes();
+
+    Result selectUploadLists();
 }

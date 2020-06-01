@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dataimport.mapper.cluster.UploadInfoMapper">
+
+
+    <insert id="addUploadInfo" useGeneratedKeys="true" keyProperty="id">
+            INSERT INTO xiaoe_upload_info(create_user,original_file,file_size,start_time) VALUES (#{upload.createUser},#{upload.originalFile},#{upload.fileSize},#{upload.startTime})
+    </insert>
+    <update id="updateUploadInfoById">
+        UPDATE xiaoe_upload_info SET end_time = #{endTime},target_file=#{targetFileUrl},status=#{status} where id = #{id}
+    </update>
+    <update id="updateUploadInfoFail">
+        UPDATE xiaoe_upload_info SET status=#{status} where id = #{id}
+    </update>
+</mapper>
